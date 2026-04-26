@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Santosh Kumar | Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0f;
+      --surface: #111118;
+      --card: #16161f;
+      --accent: #00e5ff;
+      --accent2: #7c4dff;
+      --text: #e8e8f0;
+      --muted: #7070a0;
+      --border: #ffffff12;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Syne', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 999;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.2rem 4rem;
+      background: rgba(10,10,15,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .logo {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.1rem; color: var(--accent);
+      letter-spacing: 2px;
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted); text-decoration: none;
+      font-size: 0.85rem; letter-spacing: 1px;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 8rem 4rem 4rem;
+      position: relative; overflow: hidden;
+    }
+    .hero-glow {
+      position: absolute;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(0,229,255,0.08) 0%, transparent 70%);
+      top: 10%; left: -100px;
+      animation: float 8s ease-in-out infinite;
+    }
+    .hero-glow2 {
+      position: absolute;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(124,77,255,0.08) 0%, transparent 70%);
+      bottom: 10%; right: 10%;
+      animation: float 10s ease-in-out infinite reverse;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-30px); }
+    }
+    .hero-content { position: relative; z-index: 1; max-width: 750px; }
+    .hero-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8rem; color: var(--accent);
+      letter-spacing: 3px; margin-bottom: 1.5rem;
+      opacity: 0; animation: fadeUp 0.6s 0.2s forwards;
+    }
+    .hero-name {
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 800; line-height: 1;
+      margin-bottom: 1rem;
+      opacity: 0; animation: fadeUp 0.6s 0.4s forwards;
+    }
+    .hero-name span {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-role {
+      font-size: 1.2rem; color: var(--muted);
+      margin-bottom: 2rem; font-weight: 400;
+      opacity: 0; animation: fadeUp 0.6s 0.6s forwards;
+    }
+    .hero-desc {
+      font-size: 1rem; color: var(--muted);
+      line-height: 1.8; max-width: 540px;
+      margin-bottom: 2.5rem;
+      opacity: 0; animation: fadeUp 0.6s 0.8s forwards;
+    }
+    .hero-btns {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      opacity: 0; animation: fadeUp 0.6s 1s forwards;
+    }
+    .btn {
+      padding: 0.85rem 2rem; border-radius: 4px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8rem; letter-spacing: 1px;
+      cursor: pointer; text-decoration: none;
+      transition: all 0.3s;
+    }
+    .btn-primary {
+      background: var(--accent); color: #000;
+      border: none; font-weight: 700;
+    }
+    .btn-primary:hover {
+      background: #fff; transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,229,255,0.3);
+    }
+    .btn-outline {
+      border: 1px solid var(--border); color: var(--text);
+      background: transparent;
+    }
+    .btn-outline:hover {
+      border-color: var(--accent); color: var(--accent);
+      transform: translateY(-2px);
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── SECTIONS ── */
+    section { padding: 6rem 4rem; }
+    .section-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem; color: var(--accent);
+      letter-spacing: 3px; margin-bottom: 0.5rem;
+    }
+    .section-title {
+      font-size: 2.5rem; font-weight: 800;
+      margin-bottom: 3rem;
+    }
+
+    /* ── ABOUT ── */
+    #about { background: var(--surface); }
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 4rem; align-items: center;
+    }
+    .about-text p {
+      color: var(--muted); line-height: 1.9;
+      margin-bottom: 1rem; font-size: 0.95rem;
+    }
+    .about-stats {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    .stat-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 8px; padding: 1.5rem;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .stat-card:hover {
+      border-color: var(--accent); transform: translateY(-4px);
+    }
+    .stat-number {
+      font-size: 2.5rem; font-weight: 800;
+      color: var(--accent); font-family: 'Space Mono', monospace;
+    }
+    .stat-label { color: var(--muted); font-size: 0.85rem; margin-top: 0.3rem; }
+
+    /* ── SKILLS ── */
+    #skills { background: var(--bg); }
+    .skills-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .skill-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 8px; padding: 1.5rem;
+      transition: all 0.3s;
+    }
+    .skill-card:hover {
+      border-color: var(--accent2);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(124,77,255,0.1);
+    }
+    .skill-icon { font-size: 1.8rem; margin-bottom: 0.8rem; }
+    .skill-title {
+      font-size: 0.9rem; font-weight: 600;
+      margin-bottom: 0.8rem; color: var(--text);
+    }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .tag {
+      background: rgba(0,229,255,0.08);
+      border: 1px solid rgba(0,229,255,0.2);
+      color: var(--accent); font-size: 0.72rem;
+      padding: 0.25rem 0.6rem; border-radius: 3px;
+      font-family: 'Space Mono', monospace;
+    }
+
+    /* ── PROJECTS ── */
+    #projects { background: var(--surface); }
+    .projects-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+    .project-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 8px; padding: 1.8rem;
+      display: flex; flex-direction: column;
+      transition: all 0.3s;
+    }
+    .project-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(0,229,255,0.08);
+    }
+    .project-number {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem; color: var(--accent);
+      letter-spacing: 2px; margin-bottom: 1rem;
+    }
+    .project-title {
+      font-size: 1.15rem; font-weight: 700;
+      margin-bottom: 0.8rem;
+    }
+    .project-desc {
+      color: var(--muted); font-size: 0.88rem;
+      line-height: 1.7; flex: 1; margin-bottom: 1.2rem;
+    }
+    .project-techs { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.2rem; }
+    .tech-tag {
+      background: rgba(124,77,255,0.1);
+      border: 1px solid rgba(124,77,255,0.3);
+      color: #b39ddb; font-size: 0.7rem;
+      padding: 0.2rem 0.55rem; border-radius: 3px;
+      font-family: 'Space Mono', monospace;
+    }
+    .project-link {
+      color: var(--accent); text-decoration: none;
+      font-size: 0.8rem; font-family: 'Space Mono', monospace;
+      letter-spacing: 1px;
+      display: flex; align-items: center; gap: 0.4rem;
+      transition: gap 0.3s;
+    }
+    .project-link:hover { gap: 0.8rem; }
+
+    /* ── EXPERIENCE ── */
+    #experience { background: var(--bg); }
+    .exp-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 8px 8px 0; padding: 2rem;
+      max-width: 800px;
+      transition: transform 0.3s;
+    }
+    .exp-card:hover { transform: translateX(8px); }
+    .exp-header {
+      display: flex; justify-content: space-between;
+      align-items: flex-start; margin-bottom: 0.5rem;
+    }
+    .exp-role { font-size: 1.1rem; font-weight: 700; }
+    .exp-date {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem; color: var(--accent);
+    }
+    .exp-company { color: var(--muted); font-size: 0.9rem; margin-bottom: 1rem; }
+    .exp-points { list-style: none; }
+    .exp-points li {
+      color: var(--muted); font-size: 0.88rem;
+      line-height: 1.7; margin-bottom: 0.5rem;
+      padding-left: 1.2rem; position: relative;
+    }
+    .exp-points li::before {
+      content: '▹'; color: var(--accent);
+      position: absolute; left: 0;
+    }
+
+    /* ── CONTACT ── */
+    #contact {
+      background: var(--surface);
+      text-align: center;
+    }
+    .contact-wrapper { max-width: 600px; margin: 0 auto; }
+    .contact-desc {
+      color: var(--muted); line-height: 1.8;
+      margin-bottom: 2.5rem; font-size: 0.95rem;
+    }
+    .contact-links {
+      display: flex; justify-content: center;
+      flex-wrap: wrap; gap: 1rem; margin-bottom: 3rem;
+    }
+    .contact-link {
+      display: flex; align-items: center; gap: 0.6rem;
+      background: var(--card); border: 1px solid var(--border);
+      color: var(--text); text-decoration: none;
+      padding: 0.8rem 1.5rem; border-radius: 4px;
+      font-size: 0.85rem; transition: all 0.3s;
+    }
+    .contact-link:hover {
+      border-color: var(--accent); color: var(--accent);
+      transform: translateY(-3px);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center; padding: 2rem;
+      color: var(--muted); font-size: 0.8rem;
+      font-family: 'Space Mono', monospace;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1.2rem; }
+      section { padding: 4rem 1.5rem; }
+      #hero { padding: 7rem 1.5rem 3rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .exp-header { flex-direction: column; gap: 0.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">SK.</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-content">
+    <p class="hero-tag">// AVAILABLE FOR OPPORTUNITIES</p>
+    <h1 class="hero-name">Santosh<br/><span>Kumar</span></h1>
+    <p class="hero-role">Software Developer &nbsp;·&nbsp; Data Analyst &nbsp;·&nbsp; B.Tech CSE</p>
+    <p class="hero-desc">
+      Final year Computer Science student passionate about building functional web applications
+      and extracting insights from data. I write clean Python, query databases confidently,
+      and love turning complex problems into simple solutions.
+    </p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn btn-primary">View Projects</a>
+      <a href="#contact" class="btn btn-outline">Contact Me</a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <p class="section-label">// 01. ABOUT</p>
+  <h2 class="section-title">Who I Am</h2>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>
+        I'm Santosh Kumar, a final year B.Tech Computer Science student at Mangalayatan
+        University, Aligarh. I have a strong foundation in Python, SQL, and web technologies,
+        and I love building things that solve real problems.
+      </p>
+      <p>
+        During my internship at Unified Mentor Pvt. Ltd, I worked as a Data & Technology
+        Intern where I built automated data pipelines, interactive dashboards, and wrote
+        Python scripts that saved hours of manual work.
+      </p>
+      <p>
+        I'm now actively seeking entry-level Software Developer or Analyst roles where I can
+        contribute my technical skills and grow with a great team.
+      </p>
+    </div>
+    <div class="about-stats">
+      <div class="stat-card">
+        <div class="stat-number">4+</div>
+        <div class="stat-label">Projects Completed</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">3</div>
+        <div class="stat-label">Months Internship</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">82%</div>
+        <div class="stat-label">B.Tech Score</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">5+</div>
+        <div class="stat-label">Certifications</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <p class="section-label">// 02. SKILLS</p>
+  <h2 class="section-title">What I Know</h2>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-icon">🌐</div>
+      <div class="skill-title">Frontend Development</div>
+      <div class="skill-tags">
+        <span class="tag">HTML5</span>
+        <span class="tag">CSS3</span>
+        <span class="tag">JavaScript</span>
+        <span class="tag">Responsive Design</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🐍</div>
+      <div class="skill-title">Backend & Scripting</div>
+      <div class="skill-tags">
+        <span class="tag">Python</span>
+        <span class="tag">SQL</span>
+        <span class="tag">MySQL</span>
+        <span class="tag">Pandas</span>
+        <span class="tag">NumPy</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">📊</div>
+      <div class="skill-title">Data & Visualization</div>
+      <div class="skill-tags">
+        <span class="tag">Power BI</span>
+        <span class="tag">Excel</span>
+        <span class="tag">Matplotlib</span>
+        <span class="tag">Seaborn</span>
+        <span class="tag">EDA</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🤖</div>
+      <div class="skill-title">Machine Learning</div>
+      <div class="skill-tags">
+        <span class="tag">Scikit-learn</span>
+        <span class="tag">Classification</span>
+        <span class="tag">Regression</span>
+        <span class="tag">Feature Engineering</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🛠️</div>
+      <div class="skill-title">Tools & Platforms</div>
+      <div class="skill-tags">
+        <span class="tag">Git</span>
+        <span class="tag">GitHub</span>
+        <span class="tag">VS Code</span>
+        <span class="tag">Jupyter</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">💡</div>
+      <div class="skill-title">CS Fundamentals</div>
+      <div class="skill-tags">
+        <span class="tag">OOPs</span>
+        <span class="tag">DBMS</span>
+        <span class="tag">OS Concepts</span>
+        <span class="tag">Networking Basics</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <p class="section-label">// 03. PROJECTS</p>
+  <h2 class="section-title">What I've Built</h2>
+  <div class="projects-grid">
+
+    <div class="project-card">
+      <p class="project-number">PROJECT_01</p>
+      <h3 class="project-title">Personal Portfolio Website</h3>
+      <p class="project-desc">
+        Designed and developed this fully responsive portfolio from scratch.
+        Clean UI, smooth animations, and mobile-friendly layout built with pure HTML, CSS and JavaScript.
+        Deployed live via GitHub Pages.
+      </p>
+      <div class="project-techs">
+        <span class="tech-tag">HTML5</span>
+        <span class="tech-tag">CSS3</span>
+        <span class="tech-tag">JavaScript</span>
+        <span class="tech-tag">GitHub Pages</span>
+      </div>
+      <a href="https://github.com/SantoshKumar902" class="project-link" target="_blank">
+        View on GitHub →
+      </a>
+    </div>
+
+    <div class="project-card">
+      <p class="project-number">PROJECT_02</p>
+      <h3 class="project-title">To-Do List Web App</h3>
+      <p class="project-desc">
+        A fully functional task manager with add, delete, complete, and filter features.
+        Uses localStorage to persist tasks. Clean interface with real-time updates and
+        no page reload required.
+      </p>
+      <div class="project-techs">
+        <span class="tech-tag">HTML5</span>
+        <span class="tech-tag">CSS3</span>
+        <span class="tech-tag">JavaScript</span>
+        <span class="tech-tag">LocalStorage</span>
+      </div>
+      <a href="https://github.com/SantoshKumar902" class="project-link" target="_blank">
+        View on GitHub →
+      </a>
+    </div>
+
+    <div class="project-card">
+      <p class="project-number">PROJECT_03</p>
+      <h3 class="project-title">Customer Churn Prediction</h3>
+      <p class="project-desc">
+        ML model achieving 82% accuracy to predict customer churn using Random Forest.
+        Preprocessed 7,000+ records, performed feature engineering, and evaluated
+        with confusion matrix and ROC-AUC score.
+      </p>
+      <div class="project-techs">
+        <span class="tech-tag">Python</span>
+        <span class="tech-tag">Scikit-learn</span>
+        <span class="tech-tag">Pandas</span>
+        <span class="tech-tag">ML</span>
+      </div>
+      <a href="https://github.com/SantoshKumar902" class="project-link" target="_blank">
+        View on GitHub →
+      </a>
+    </div>
+
+    <div class="project-card">
+      <p class="project-number">PROJECT_04</p>
+      <h3 class="project-title">Coffee Sales Analysis</h3>
+      <p class="project-desc">
+        Analyzed 5,000+ vending machine sales records. Identified top 5 products
+        driving 70% of revenue. Built interactive Power BI dashboard for
+        real-time business insights.
+      </p>
+      <div class="project-techs">
+        <span class="tech-tag">Python</span>
+        <span class="tech-tag">SQL</span>
+        <span class="tech-tag">Power BI</span>
+        <span class="tech-tag">Pandas</span>
+      </div>
+      <a href="https://github.com/SantoshKumar902" class="project-link" target="_blank">
+        View on GitHub →
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <p class="section-label">// 04. EXPERIENCE</p>
+  <h2 class="section-title">Where I've Worked</h2>
+  <div class="exp-card">
+    <div class="exp-header">
+      <div class="exp-role">Data & Technology Intern</div>
+      <div class="exp-date">JUN 2024 – SEP 2024</div>
+    </div>
+    <div class="exp-company">Unified Mentor Pvt. Ltd</div>
+    <ul class="exp-points">
+      <li>Built Python scripts and SQL queries to process and analyze large datasets efficiently</li>
+      <li>Developed automated data pipelines reducing manual processing time by 30%</li>
+      <li>Created interactive Power BI dashboards for real-time business reporting</li>
+      <li>Collaborated with team on data-driven projects strengthening problem-solving skills</li>
+    </ul>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <p class="section-label">// 05. CONTACT</p>
+  <h2 class="section-title">Let's Connect</h2>
+  <div class="contact-wrapper">
+    <p class="contact-desc">
+      I'm actively looking for entry-level Software Developer and Data Analyst opportunities.
+      If you have a role that fits my profile, I'd love to hear from you!
+    </p>
+    <div class="contact-links">
+      <a href="mailto:santoshkumar729629@gmail.com" class="contact-link">
+        📧 Email Me
+      </a>
+      <a href="https://linkedin.com/in/santosh-kumar-sk" target="_blank" class="contact-link">
+        💼 LinkedIn
+      </a>
+      <a href="https://github.com/SantoshKumar902" target="_blank" class="contact-link">
+        🐙 GitHub
+      </a>
+    </div>
+    <a href="mailto:santoshkumar729629@gmail.com" class="btn btn-primary">
+      Say Hello →
+    </a>
+  </div>
+</section>
+
+<footer>
+  <p>Designed & Built by Santosh Kumar &nbsp;·&nbsp; 2024</p>
+</footer>
+
+</body>
+</html>
