@@ -28,7 +28,6 @@
       overflow-x: hidden;
     }
 
-    /* ── NOISE OVERLAY ── */
     body::before {
       content: '';
       position: fixed; inset: 0;
@@ -36,7 +35,6 @@
       pointer-events: none; z-index: 999;
     }
 
-    /* ── NAV ── */
     nav {
       position: fixed; top: 0; width: 100%; z-index: 100;
       display: flex; justify-content: space-between; align-items: center;
@@ -58,7 +56,6 @@
     }
     .nav-links a:hover { color: var(--accent); }
 
-    /* ── HERO ── */
     #hero {
       min-height: 100vh;
       display: flex; align-items: center;
@@ -144,7 +141,6 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* ── SECTIONS ── */
     section { padding: 6rem 4rem; }
     .section-label {
       font-family: 'Space Mono', monospace;
@@ -156,7 +152,6 @@
       margin-bottom: 3rem;
     }
 
-    /* ── ABOUT ── */
     #about { background: var(--surface); }
     .about-grid {
       display: grid; grid-template-columns: 1fr 1fr;
@@ -184,7 +179,6 @@
     }
     .stat-label { color: var(--muted); font-size: 0.85rem; margin-top: 0.3rem; }
 
-    /* ── SKILLS ── */
     #skills { background: var(--bg); }
     .skills-grid {
       display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -214,7 +208,6 @@
       font-family: 'Space Mono', monospace;
     }
 
-    /* ── PROJECTS ── */
     #projects { background: var(--surface); }
     .projects-grid {
       display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -230,6 +223,24 @@
       border-color: var(--accent);
       transform: translateY(-6px);
       box-shadow: 0 16px 40px rgba(0,229,255,0.08);
+    }
+    .project-card.featured {
+      border-color: rgba(0,229,255,0.25);
+      background: linear-gradient(135deg, #16161f 0%, #1a1a2e 100%);
+    }
+    .project-card.featured:hover {
+      border-color: var(--accent);
+      box-shadow: 0 16px 40px rgba(0,229,255,0.15);
+    }
+    .project-badge {
+      display: inline-block;
+      background: rgba(0,229,255,0.15);
+      border: 1px solid rgba(0,229,255,0.4);
+      color: var(--accent);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem; letter-spacing: 1px;
+      padding: 0.2rem 0.6rem; border-radius: 3px;
+      margin-bottom: 0.8rem;
     }
     .project-number {
       font-family: 'Space Mono', monospace;
@@ -252,6 +263,9 @@
       padding: 0.2rem 0.55rem; border-radius: 3px;
       font-family: 'Space Mono', monospace;
     }
+    .project-links {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+    }
     .project-link {
       color: var(--accent); text-decoration: none;
       font-size: 0.8rem; font-family: 'Space Mono', monospace;
@@ -260,8 +274,11 @@
       transition: gap 0.3s;
     }
     .project-link:hover { gap: 0.8rem; }
+    .project-link.demo {
+      color: #b39ddb;
+    }
+    .project-link.demo:hover { color: var(--accent2); }
 
-    /* ── EXPERIENCE ── */
     #experience { background: var(--bg); }
     .exp-card {
       background: var(--card); border: 1px solid var(--border);
@@ -292,7 +309,6 @@
       position: absolute; left: 0;
     }
 
-    /* ── CONTACT ── */
     #contact {
       background: var(--surface);
       text-align: center;
@@ -318,7 +334,6 @@
       transform: translateY(-3px);
     }
 
-    /* ── FOOTER ── */
     footer {
       text-align: center; padding: 2rem;
       color: var(--muted); font-size: 0.8rem;
@@ -326,7 +341,6 @@
       border-top: 1px solid var(--border);
     }
 
-    /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
       nav { padding: 1rem 1.5rem; }
       .nav-links { gap: 1.2rem; }
@@ -335,11 +349,51 @@
       .about-grid { grid-template-columns: 1fr; gap: 2rem; }
       .exp-header { flex-direction: column; gap: 0.5rem; }
     }
+
+    /* ── SCROLL ANIMATIONS ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s cubic-bezier(0.4,0,0.2,1),
+                  transform 0.7s cubic-bezier(0.4,0,0.2,1);
+    }
+    .reveal.from-left {
+      transform: translateX(-50px);
+    }
+    .reveal.from-right {
+      transform: translateX(50px);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translate(0, 0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+    .reveal-delay-5 { transition-delay: 0.5s; }
+    .reveal-delay-6 { transition-delay: 0.6s; }
+
+    /* Nav active link highlight on scroll */
+    .nav-links a.active { color: var(--accent); }
+
+    /* Cursor glow that follows mouse */
+    .cursor-glow {
+      position: fixed;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,229,255,0.04) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+      transform: translate(-50%, -50%);
+      transition: left 0.15s ease, top 0.15s ease;
+    }
   </style>
 </head>
 <body>
 
-<!-- NAV -->
+<div class="cursor-glow" id="cursorGlow"></div>
+
 <nav>
   <div class="logo">SK.</div>
   <ul class="nav-links">
@@ -351,18 +405,17 @@
   </ul>
 </nav>
 
-<!-- HERO -->
 <section id="hero">
   <div class="hero-glow"></div>
   <div class="hero-glow2"></div>
   <div class="hero-content">
     <p class="hero-tag">// AVAILABLE FOR OPPORTUNITIES</p>
     <h1 class="hero-name">Santosh<br/><span>Kumar</span></h1>
-    <p class="hero-role">Software Developer &nbsp;·&nbsp; Data Analyst &nbsp;·&nbsp; B.Tech CSE</p>
+    <p class="hero-role">Python Developer &nbsp;·&nbsp; ML Engineer &nbsp;·&nbsp; B.Tech CSE</p>
     <p class="hero-desc">
-      Final year Computer Science student passionate about building functional web applications
-      and extracting insights from data. I write clean Python, query databases confidently,
-      and love turning complex problems into simple solutions.
+      Final year Computer Science student passionate about building intelligent applications
+      and deploying ML models. I write clean Python, integrate REST APIs, and love turning
+      complex problems into simple, working solutions.
     </p>
     <div class="hero-btns">
       <a href="#projects" class="btn btn-primary">View Projects</a>
@@ -371,12 +424,11 @@
   </div>
 </section>
 
-<!-- ABOUT -->
 <section id="about">
   <p class="section-label">// 01. ABOUT</p>
   <h2 class="section-title">Who I Am</h2>
   <div class="about-grid">
-    <div class="about-text">
+    <div class="about-text reveal from-left">
       <p>
         I'm Santosh Kumar, a final year B.Tech Computer Science student at Mangalayatan
         University, Aligarh. I have a strong foundation in Python, SQL, and web technologies,
@@ -388,13 +440,13 @@
         Python scripts that saved hours of manual work.
       </p>
       <p>
-        I'm now actively seeking entry-level Software Developer or Analyst roles where I can
-        contribute my technical skills and grow with a great team.
+        I'm now actively seeking entry-level Python Developer, ML Engineer, or Software Developer
+        roles where I can contribute my technical skills and grow with a great team.
       </p>
     </div>
-    <div class="about-stats">
+    <div class="about-stats reveal from-right">
       <div class="stat-card">
-        <div class="stat-number">4+</div>
+        <div class="stat-number">6+</div>
         <div class="stat-label">Projects Completed</div>
       </div>
       <div class="stat-card">
@@ -413,22 +465,22 @@
   </div>
 </section>
 
-<!-- SKILLS -->
 <section id="skills">
   <p class="section-label">// 02. SKILLS</p>
   <h2 class="section-title">What I Know</h2>
   <div class="skills-grid">
-    <div class="skill-card">
+    <div class="skill-card reveal reveal-delay-1">
       <div class="skill-icon">🌐</div>
       <div class="skill-title">Frontend Development</div>
       <div class="skill-tags">
         <span class="tag">HTML5</span>
         <span class="tag">CSS3</span>
         <span class="tag">JavaScript</span>
+        <span class="tag">REST API</span>
         <span class="tag">Responsive Design</span>
       </div>
     </div>
-    <div class="skill-card">
+    <div class="skill-card reveal reveal-delay-2">
       <div class="skill-icon">🐍</div>
       <div class="skill-title">Backend & Scripting</div>
       <div class="skill-tags">
@@ -439,7 +491,18 @@
         <span class="tag">NumPy</span>
       </div>
     </div>
-    <div class="skill-card">
+    <div class="skill-card reveal reveal-delay-3">
+      <div class="skill-icon">🤖</div>
+      <div class="skill-title">Machine Learning</div>
+      <div class="skill-tags">
+        <span class="tag">Scikit-learn</span>
+        <span class="tag">CNN</span>
+        <span class="tag">Classification</span>
+        <span class="tag">Feature Engineering</span>
+        <span class="tag">Gradio</span>
+      </div>
+    </div>
+    <div class="skill-card reveal reveal-delay-4">
       <div class="skill-icon">📊</div>
       <div class="skill-title">Data & Visualization</div>
       <div class="skill-tags">
@@ -450,27 +513,18 @@
         <span class="tag">EDA</span>
       </div>
     </div>
-    <div class="skill-card">
-      <div class="skill-icon">🤖</div>
-      <div class="skill-title">Machine Learning</div>
-      <div class="skill-tags">
-        <span class="tag">Scikit-learn</span>
-        <span class="tag">Classification</span>
-        <span class="tag">Regression</span>
-        <span class="tag">Feature Engineering</span>
-      </div>
-    </div>
-    <div class="skill-card">
+    <div class="skill-card reveal reveal-delay-5">
       <div class="skill-icon">🛠️</div>
       <div class="skill-title">Tools & Platforms</div>
       <div class="skill-tags">
         <span class="tag">Git</span>
-        <span class="tag">GitHub</span>
+        <span class="tag">GitHub Pages</span>
+        <span class="tag">Hugging Face</span>
         <span class="tag">VS Code</span>
         <span class="tag">Jupyter</span>
       </div>
     </div>
-    <div class="skill-card">
+    <div class="skill-card reveal reveal-delay-6">
       <div class="skill-icon">💡</div>
       <div class="skill-title">CS Fundamentals</div>
       <div class="skill-tags">
@@ -483,51 +537,57 @@
   </div>
 </section>
 
-<!-- PROJECTS -->
 <section id="projects">
   <p class="section-label">// 03. PROJECTS</p>
   <h2 class="section-title">What I've Built</h2>
   <div class="projects-grid">
 
-    <div class="project-card">
+    <div class="project-card featured reveal reveal-delay-1">
+      <span class="project-badge">⚡ LIVE DEMO</span>
       <p class="project-number">PROJECT_01</p>
-      <h3 class="project-title">Personal Portfolio Website</h3>
+      <h3 class="project-title">WeatherWave — Live Weather App</h3>
       <p class="project-desc">
-        Designed and developed this fully responsive portfolio from scratch.
-        Clean UI, smooth animations, and mobile-friendly layout built with pure HTML, CSS and JavaScript.
-        Deployed live via GitHub Pages.
+        Real-time weather application that fetches live data for any city worldwide using
+        OpenWeatherMap REST API. Displays temperature, humidity, wind speed, visibility,
+        sunrise & sunset times. Fully responsive, deployed on GitHub Pages.
       </p>
       <div class="project-techs">
+        <span class="tech-tag">JavaScript</span>
+        <span class="tech-tag">REST API</span>
+        <span class="tech-tag">OpenWeatherMap</span>
         <span class="tech-tag">HTML5</span>
         <span class="tech-tag">CSS3</span>
-        <span class="tech-tag">JavaScript</span>
         <span class="tech-tag">GitHub Pages</span>
       </div>
-      <a href="https://github.com/SantoshKumar902" class="project-link" target="_blank">
-        View on GitHub →
-      </a>
+      <div class="project-links">
+        <a href="https://santoshkumar902.github.io/Weather-App" class="project-link" target="_blank">Live Demo →</a>
+        <a href="https://github.com/SantoshKumar902/Weather-App" class="project-link demo" target="_blank">GitHub →</a>
+      </div>
     </div>
 
-    <div class="project-card">
+    <div class="project-card featured reveal reveal-delay-2">
+      <span class="project-badge">🤖 ML DEPLOYED</span>
       <p class="project-number">PROJECT_02</p>
-      <h3 class="project-title">To-Do List Web App</h3>
+      <h3 class="project-title">Pokemon Image Classifier</h3>
       <p class="project-desc">
-        A fully functional task manager with add, delete, complete, and filter features.
-        Uses localStorage to persist tasks. Clean interface with real-time updates and
-        no page reload required.
+        Deep learning model trained to classify Pokemon from images using Convolutional
+        Neural Networks (CNN). Trained, evaluated, and deployed as an interactive web app
+        on Hugging Face Spaces — publicly accessible and live.
       </p>
       <div class="project-techs">
-        <span class="tech-tag">HTML5</span>
-        <span class="tech-tag">CSS3</span>
-        <span class="tech-tag">JavaScript</span>
-        <span class="tech-tag">LocalStorage</span>
+        <span class="tech-tag">Python</span>
+        <span class="tech-tag">CNN</span>
+        <span class="tech-tag">Deep Learning</span>
+        <span class="tech-tag">Gradio</span>
+        <span class="tech-tag">Hugging Face</span>
       </div>
-      <a href="https://github.com/SantoshKumar902" class="project-link" target="_blank">
-        View on GitHub →
-      </a>
+      <div class="project-links">
+        <a href="https://huggingface.co/spaces/SantoshKumar21/Pokemon_Image_Classifier" class="project-link" target="_blank">Live Demo →</a>
+        <a href="https://github.com/SantoshKumar902" class="project-link demo" target="_blank">GitHub →</a>
+      </div>
     </div>
 
-    <div class="project-card">
+    <div class="project-card reveal reveal-delay-3">
       <p class="project-number">PROJECT_03</p>
       <h3 class="project-title">Customer Churn Prediction</h3>
       <p class="project-desc">
@@ -539,14 +599,14 @@
         <span class="tech-tag">Python</span>
         <span class="tech-tag">Scikit-learn</span>
         <span class="tech-tag">Pandas</span>
-        <span class="tech-tag">ML</span>
+        <span class="tech-tag">Random Forest</span>
       </div>
-      <a href="https://github.com/SantoshKumar902" class="project-link" target="_blank">
-        View on GitHub →
-      </a>
+      <div class="project-links">
+        <a href="https://github.com/SantoshKumar902/Customer-Churn-Prediction-ML" class="project-link" target="_blank">View on GitHub →</a>
+      </div>
     </div>
 
-    <div class="project-card">
+    <div class="project-card reveal reveal-delay-4">
       <p class="project-number">PROJECT_04</p>
       <h3 class="project-title">Coffee Sales Analysis</h3>
       <p class="project-desc">
@@ -560,19 +620,64 @@
         <span class="tech-tag">Power BI</span>
         <span class="tech-tag">Pandas</span>
       </div>
-      <a href="https://github.com/SantoshKumar902" class="project-link" target="_blank">
-        View on GitHub →
-      </a>
+      <div class="project-links">
+        <a href="https://github.com/SantoshKumar902/Coffee-Sales-Analysis" class="project-link" target="_blank">View on GitHub →</a>
+      </div>
+    </div>
+
+    <div class="project-card reveal reveal-delay-5">
+      <p class="project-number">PROJECT_05</p>
+      <h3 class="project-title">Electric Vehicle Data Analysis</h3>
+      <p class="project-desc">
+        Exploratory data analysis on EV adoption trends across regions. Identified key
+        patterns in EV registrations, manufacturer distribution, and range statistics
+        using Python and data visualization libraries.
+      </p>
+      <div class="project-techs">
+        <span class="tech-tag">Python</span>
+        <span class="tech-tag">Pandas</span>
+        <span class="tech-tag">Matplotlib</span>
+        <span class="tech-tag">Seaborn</span>
+        <span class="tech-tag">EDA</span>
+      </div>
+      <div class="project-links">
+        <a href="https://github.com/SantoshKumar902/Electric-Vehicle-EVs-Data-Analysis" class="project-link" target="_blank">View on GitHub →</a>
+      </div>
+    </div>
+
+    <div class="project-card reveal reveal-delay-6">
+      <p class="project-number">PROJECT_06</p>
+      <h3 class="project-title">Used Bike Price Prediction</h3>
+      <p class="project-desc">
+        Machine learning model to predict resale prices of used bikes based on features
+        like brand, age, mileage, and condition. Includes data preprocessing, feature
+        selection, and regression model evaluation.
+      </p>
+      <div class="project-techs">
+        <span class="tech-tag">Python</span>
+        <span class="tech-tag">Scikit-learn</span>
+        <span class="tech-tag">Pandas</span>
+        <span class="tech-tag">Regression</span>
+      </div>
+      <div class="project-links">
+        <a href="https://github.com/SantoshKumar902/Used-Bike-Price-Prediction" class="project-link" target="_blank">View on GitHub →</a>
+      </div>
     </div>
 
   </div>
+
+  <div style="text-align:center; margin-top: 3rem;" class="reveal">
+    <a href="https://github.com/SantoshKumar902" target="_blank" class="btn btn-outline">
+      🐙 View All Projects on GitHub →
+    </a>
+  </div>
+
 </section>
 
-<!-- EXPERIENCE -->
 <section id="experience">
   <p class="section-label">// 04. EXPERIENCE</p>
   <h2 class="section-title">Where I've Worked</h2>
-  <div class="exp-card">
+  <div class="exp-card reveal from-left">
     <div class="exp-header">
       <div class="exp-role">Data & Technology Intern</div>
       <div class="exp-date">JUN 2024 – SEP 2024</div>
@@ -587,35 +692,95 @@
   </div>
 </section>
 
-<!-- CONTACT -->
 <section id="contact">
   <p class="section-label">// 05. CONTACT</p>
   <h2 class="section-title">Let's Connect</h2>
   <div class="contact-wrapper">
     <p class="contact-desc">
-      I'm actively looking for entry-level Software Developer and Data Analyst opportunities.
-      If you have a role that fits my profile, I'd love to hear from you!
+      I'm actively looking for entry-level Python Developer, ML Engineer, and Software Developer
+      opportunities. If you have a role that fits my profile, I'd love to hear from you!
     </p>
     <div class="contact-links">
-      <a href="mailto:santoshkumar729629@gmail.com" class="contact-link">
-        📧 Email Me
-      </a>
-      <a href="https://linkedin.com/in/santosh-kumar-sk" target="_blank" class="contact-link">
-        💼 LinkedIn
-      </a>
-      <a href="https://github.com/SantoshKumar902" target="_blank" class="contact-link">
-        🐙 GitHub
-      </a>
+      <a href="mailto:santoshkumar729629@gmail.com" class="contact-link">📧 Email Me</a>
+      <a href="https://linkedin.com/in/santosh-kumar-sk" class="contact-link" target="_blank">💼 LinkedIn</a>
+      <a href="https://github.com/SantoshKumar902" class="contact-link" target="_blank">🐙 GitHub</a>
     </div>
-    <a href="mailto:santoshkumar729629@gmail.com" class="btn btn-primary">
-      Say Hello →
-    </a>
+    <a href="mailto:santoshkumar729629@gmail.com" class="btn btn-primary">Say Hello →</a>
   </div>
 </section>
 
 <footer>
-  <p>Designed & Built by Santosh Kumar &nbsp;·&nbsp; 2024</p>
+  Designed & Built by Santosh Kumar · 2025
 </footer>
+
+<script>
+  // ── INTERSECTION OBSERVER — Scroll Reveal ──
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // ── SECTION LABELS — reveal too ──
+  document.querySelectorAll('.section-label, .section-title').forEach((el, i) => {
+    el.classList.add('reveal');
+    observer.observe(el);
+  });
+
+  // ── CURSOR GLOW ──
+  const glow = document.getElementById('cursorGlow');
+  document.addEventListener('mousemove', e => {
+    glow.style.left = e.clientX + 'px';
+    glow.style.top  = e.clientY + 'px';
+  });
+
+  // ── ACTIVE NAV on scroll ──
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(sec => {
+      if (window.scrollY >= sec.offsetTop - 120) current = sec.getAttribute('id');
+    });
+    navLinks.forEach(a => {
+      a.classList.remove('active');
+      if (a.getAttribute('href') === '#' + current) a.classList.add('active');
+    });
+  });
+
+  // ── STAT COUNTER ANIMATION ──
+  const statNumbers = document.querySelectorAll('.stat-number');
+  const countObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+      const text = el.textContent;
+      const num = parseFloat(text);
+      if (isNaN(num)) return;
+      const suffix = text.replace(/[\d.]/g, '');
+      let start = 0;
+      const duration = 1200;
+      const step = timestamp => {
+        if (!start) start = timestamp;
+        const progress = Math.min((timestamp - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = (Number.isInteger(num)
+          ? Math.floor(eased * num)
+          : (eased * num).toFixed(0)) + suffix;
+        if (progress < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+      countObserver.unobserve(el);
+    });
+  }, { threshold: 0.5 });
+
+  statNumbers.forEach(el => countObserver.observe(el));
+</script>
 
 </body>
 </html>
